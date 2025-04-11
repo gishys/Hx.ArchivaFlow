@@ -5,12 +5,14 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
     using Hx.ArchivaFlow.Domain.Shared;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Volo.Abp.EntityFrameworkCore.Modeling;
 
     public class ArchiveConfiguration : IEntityTypeConfiguration<Archive>
     {
         public void Configure(EntityTypeBuilder<Archive> builder)
         {
             builder.ToTable("ARC_ARCHIVES");
+            builder.ConfigureByConvention();
 
             builder.HasKey(a => a.Id);
             builder.HasIndex(a => a.ArchiveNo);

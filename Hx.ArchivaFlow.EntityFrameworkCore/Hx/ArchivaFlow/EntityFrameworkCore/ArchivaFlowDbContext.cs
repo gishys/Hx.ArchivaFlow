@@ -1,9 +1,11 @@
 ﻿using Hx.ArchivaFlow.Domain;
 using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace Hx.ArchivaFlow.EntityFrameworkCore
 {
+    [ConnectionStringName("ArchivaFlow")]
     public class ArchivaFlowDbContext(DbContextOptions<ArchivaFlowDbContext> options) : AbpDbContext<ArchivaFlowDbContext>(options)
     {
         public virtual DbSet<Archive> Archives { get; set; }

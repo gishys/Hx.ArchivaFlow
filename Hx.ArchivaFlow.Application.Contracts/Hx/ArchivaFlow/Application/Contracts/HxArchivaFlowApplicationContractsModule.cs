@@ -6,7 +6,7 @@ namespace Hx.ArchivaFlow.Application.Contracts
 {
     [DependsOn(typeof(HxArchivaFlowDomainSharedModule))]
     [DependsOn(typeof(AbpDddApplicationContractsModule))]
-    public class HxArchivaFlowApplicationContractsModule
+    public class HxArchivaFlowApplicationContractsModule : AbpModule
     {
     }
 }

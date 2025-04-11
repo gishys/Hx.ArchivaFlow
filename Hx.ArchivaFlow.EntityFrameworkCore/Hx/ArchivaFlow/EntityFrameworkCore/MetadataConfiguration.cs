@@ -2,6 +2,7 @@
 using Hx.ArchivaFlow.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace Hx.ArchivaFlow.EntityFrameworkCore
 {
@@ -10,6 +11,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
         public void Configure(EntityTypeBuilder<Metadata> builder)
         {
             builder.ToTable("ARC_METADATA");
+            builder.ConfigureByConvention();
 
             builder.HasKey(m => new { m.ArchiveId, m.Key });
 
@@ -37,6 +39,11 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             builder.Property(m => m.NavigationProperty)
                 .HasMaxLength(ArchivaFlowConsts.MetadataNavigationPropertyMaxLength)
                    .HasColumnName("NAVIGATION_PROPERTY");
+
+            builder.Property(p => p.CreationTime).HasColumnName("CREATIONTIME").HasColumnType("timestamp with time zone");
+            builder.Property(p => p.CreatorId).HasColumnName("CREATORID");
+            builder.Property(p => p.LastModificationTime).HasColumnName("LASTMODIFICATIONTIME").HasColumnType("timestamp with time zone");
+            builder.Property(p => p.LastModifierId).HasColumnName("LASTMODIFIERID");
         }
     }
 }

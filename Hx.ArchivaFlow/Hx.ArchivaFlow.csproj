@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hx.ArchivaFlow.Application\Hx.ArchivaFlow.Application.csproj" />
+    <ProjectReference Include="..\Hx.ArchivaFlow.Migrations\Hx.ArchivaFlow.Migrations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 ﻿using Hx.ArchivaFlow.Domain;
 using Hx.ArchivaFlow.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -14,8 +13,11 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
         {
             var dbContext = await GetDbContextAsync();
             var query = from menu in dbContext.Archives where menu.Id == id select menu;
-            if (includeDetails) { query.Include(d => d.Metadatas); }
-            return await query.FirstAsync(cancellationToken: cancellationToken);
+            if (includeDetails)
+            {
+                query = query.Include(d => d.Metadatas);
+            }
+            return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }
         public async Task<List<Archive>> GetPagedListAsync(
             string? archiveNo,
@@ -39,7 +41,10 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                 .WhereIf(endFilingDate != null, a => a.FilingDate <= endFilingDate)
                 .WhereIf(status != null, a => a.Status == status)
                 .WhereIf(metadata != null, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value == e.Value.ToString())));
-            if (includeDetails) { query.Include(d => d.Metadatas); }
+            if (includeDetails)
+            {
+                query = query.Include(d => d.Metadatas);
+            }
             return await query.OrderByDescending(d => d.CreationTime).PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken: cancellationToken);
         }
         public async Task<long> GetCountAsync(
@@ -63,11 +68,11 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                 .WhereIf(metadata != null && metadata.Count > 0, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value == e.Value.ToString())));
             return await query.CountAsync(cancellationToken: cancellationToken);
         }
-        public async Task<Archive> FindByArchiveNoAsync(string archiveNo, CancellationToken cancellationToken = default)
+        public async Task<Archive?> FindByArchiveNoAsync(string archiveNo, CancellationToken cancellationToken = default)
         {
             var dbContext = await GetDbContextAsync();
             var query = from menu in dbContext.Archives where menu.ArchiveNo == archiveNo select menu;
-            return await query.FirstAsync(cancellationToken: cancellationToken);
+            return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }
     }
 }
