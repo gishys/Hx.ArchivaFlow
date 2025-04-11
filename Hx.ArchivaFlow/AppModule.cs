@@ -3,6 +3,7 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 using Volo.Abp;
+using Hx.ArchiveFlow.Application;
 
 namespace Hx.ArchivaFlow
 {
@@ -21,7 +22,7 @@ namespace Hx.ArchivaFlow
             });
             Configure<AbpAspNetCoreMvcOptions>(options =>
             {
-                //options.ConventionalControllers.Create(typeof(MenuSystemApplicationModule).Assembly);
+                options.ConventionalControllers.Create(typeof(HxArchivaFlowApplicationModule).Assembly);
             });
         }
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

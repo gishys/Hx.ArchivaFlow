@@ -1,6 +1,4 @@
 ﻿using Hx.ArchivaFlow.Domain.Shared;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Hx.ArchivaFlow.Domain
@@ -8,21 +6,16 @@ namespace Hx.ArchivaFlow.Domain
     /// <summary>
     /// 元数据值对象
     /// </summary>
-    [Table("Metadata")]
-    public class Metadata : AuditedEntity<Guid>
+    public class Metadata : AuditedEntity
     {
         /// <summary>
         /// 元数据键（唯一标识）
         /// </summary>
-        [Column(TypeName = "varchar(50)")]
-        [Required]
         public string Key { get; private set; }
 
         /// <summary>
         /// 元数据值
         /// </summary>
-        [Column(TypeName = "nvarchar(max)")]
-        [Required]
         public string Value { get; private set; }
 
         /// <summary>
@@ -43,18 +36,60 @@ namespace Hx.ArchivaFlow.Domain
         /// <summary>
         /// 元数据导航属性（扩展预留）
         /// </summary>
-        public string NavigationProperty { get; private set; }
+        public string? NavigationProperty { get; private set; }
 
         // 赋值构造函数
-        public Metadata(Guid id, string key, string value, MetadataDataType dataType, Guid archiveId, Archive archive, string navigationProperty)
+#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
+        public Metadata(string key, string value, MetadataDataType dataType, Guid archiveId, string? navigationProperty)
+#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
         {
-            Id = id;
             Key = key;
             Value = value;
             DataType = dataType;
             ArchiveId = archiveId;
-            Archive = archive;
             NavigationProperty = navigationProperty;
         }
+        public void SetKey(string key)
+        {
+            Key = key;
+        }
+
+        public void SetValue(string value)
+        {
+            Value = value;
+        }
+
+        public void SetDataType(MetadataDataType dataType)
+        {
+            DataType = dataType;
+        }
+
+        public void SetArchiveId(Guid archiveId)
+        {
+            ArchiveId = archiveId;
+        }
+
+        public void SetNavigationProperty(string? navigationProperty)
+        {
+            NavigationProperty = navigationProperty;
+        }
+
+        public void Update(string value, MetadataDataType dataType, string? navigationProperty)
+        {
+            if (!string.Equals(Value, value))
+            {
+                Value = value;
+            }
+            if (DataType != dataType)
+            {
+                DataType = dataType;
+            }
+            if (!string.Equals(NavigationProperty, navigationProperty))
+            {
+                NavigationProperty = navigationProperty;
+            }
+        }
+
+        public override object?[] GetKeys() => [ArchiveId, Key];
     }
 }

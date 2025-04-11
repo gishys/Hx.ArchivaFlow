@@ -26,7 +26,7 @@ namespace Hx.ArchivaFlow.Domain
         /// <summary>
         /// 归档日期
         /// </summary>
-        public DateTime FilingDate { get; private set; }
+        public DateTime? FilingDate { get; private set; }
 
         /// <summary>
         /// 档案状态（使用枚举定义状态机）
@@ -41,7 +41,7 @@ namespace Hx.ArchivaFlow.Domain
         /// <summary>
         /// 备注信息
         /// </summary>
-        public string Remarks { get; private set; }
+        public string? Remarks { get; private set; }
 
         /// <summary>
         /// 关联的元数据集合
@@ -49,7 +49,7 @@ namespace Hx.ArchivaFlow.Domain
         public virtual ICollection<Metadata> Metadatas { get; private set; } = new HashSet<Metadata>();
 
         // 赋值构造函数
-        public Archive(Guid id, string archiveNo, string title, int year, DateTime filingDate, ArchiveStatus status, string businessKey, string remarks)
+        public Archive(Guid id, string archiveNo, string title, int year, DateTime? filingDate, ArchiveStatus status, string businessKey, string? remarks)
         {
             Id = id;
             ArchiveNo = archiveNo;
@@ -59,6 +59,69 @@ namespace Hx.ArchivaFlow.Domain
             Status = status;
             BusinessKey = businessKey;
             Remarks = remarks;
+        }
+        public void SetArchiveNo(string archiveNo)
+        {
+            ArchiveNo = archiveNo;
+        }
+
+        public void SetTitle(string title)
+        {
+            Title = title;
+        }
+
+        public void SetYear(int year)
+        {
+            Year = year;
+        }
+
+        public void SetFilingDate(DateTime? filingDate)
+        {
+            FilingDate = filingDate;
+        }
+
+        public void SetStatus(ArchiveStatus status)
+        {
+            Status = status;
+        }
+
+        public void SetBusinessKey(string businessKey)
+        {
+            BusinessKey = businessKey;
+        }
+
+        public void SetRemarks(string? remarks)
+        {
+            Remarks = remarks;
+        }
+
+        public void UpdateMetadata(List<Metadata> metadatas)
+        {
+            foreach (var metadata in metadatas)
+            {
+                metadata.SetArchiveId(Id);
+            }
+            var existingMetadatas = Metadatas.ToDictionary(m => m.Key);
+            foreach (var metadata in metadatas)
+            {
+                if (existingMetadatas.TryGetValue(metadata.Key, out var existing))
+                {
+                    existing.Update(
+                        metadata.Value,
+                        metadata.DataType,
+                        metadata.NavigationProperty
+                    );
+                    existingMetadatas.Remove(metadata.Key);
+                }
+                else
+                {
+                    Metadatas.Add(metadata);
+                }
+            }
+            foreach (var toRemove in existingMetadatas.Values)
+            {
+                Metadatas.Remove(toRemove);
+            }
         }
     }
 }

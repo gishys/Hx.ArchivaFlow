@@ -7,6 +7,7 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace Hx.ArchivaFlow.Domain.Shared
 {
+    [DependsOn(typeof(AbpLocalizationModule))]
     public class HxArchivaFlowDomainSharedModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
@@ -21,12 +22,12 @@ namespace Hx.ArchivaFlow.Domain.Shared
                 options.Resources
                     .Add<ArchivaFlowResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
-                    .AddVirtualJson("/Localization/MenuSystem");
+                    .AddVirtualJson("/Localization/ArchivaFlow");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>
             {
-                options.MapCodeNamespace("MenuSystem", typeof(ArchivaFlowResource));
+                options.MapCodeNamespace("ArchivaFlow", typeof(ArchivaFlowResource));
             });
         }
     }

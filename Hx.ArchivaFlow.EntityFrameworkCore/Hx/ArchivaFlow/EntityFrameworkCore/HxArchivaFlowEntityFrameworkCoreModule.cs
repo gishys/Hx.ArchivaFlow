@@ -8,7 +8,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
 {
     [DependsOn(typeof(AbpEntityFrameworkCoreModule))]
     [DependsOn(typeof(AbpEntityFrameworkCorePostgreSqlModule))]
-    internal class HxArchivaFlowEntityFrameworkCoreModule : AbpModule
+    public class HxArchivaFlowEntityFrameworkCoreModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {

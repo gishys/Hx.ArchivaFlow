@@ -5,7 +5,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Hx.ArchivaFlow.EntityFrameworkCore
 {
     internal class EfCoreMetadataRepository(IDbContextProvider<ArchivaFlowDbContext> dbContextProvider)
-        : EfCoreRepository<ArchivaFlowDbContext, Metadata, Guid>(dbContextProvider), IEfCoreMetadataRepository
+        : EfCoreRepository<ArchivaFlowDbContext, Metadata>(dbContextProvider), IEfCoreMetadataRepository
     {
     }
 }

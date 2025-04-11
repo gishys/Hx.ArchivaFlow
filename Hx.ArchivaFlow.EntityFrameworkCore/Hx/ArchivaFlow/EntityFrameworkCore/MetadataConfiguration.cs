@@ -11,7 +11,11 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
         {
             builder.ToTable("ARC_METADATA");
 
-            builder.HasKey(m => m.Id);
+            builder.HasKey(m => new { m.ArchiveId, m.Key });
+
+            builder.HasIndex(m => m.Key);
+            builder.HasIndex(m => m.Value);
+            builder.HasIndex(m => m.ArchiveId);
 
             builder.Property(m => m.Key)
                    .HasMaxLength(ArchivaFlowConsts.MetadataKeyMaxLength)
@@ -31,11 +35,8 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                    .IsRequired();
 
             builder.Property(m => m.NavigationProperty)
+                .HasMaxLength(ArchivaFlowConsts.MetadataNavigationPropertyMaxLength)
                    .HasColumnName("NAVIGATION_PROPERTY");
-
-            builder.HasOne(m => m.Archive)
-                   .WithMany(a => a.Metadatas)
-                   .HasForeignKey(m => m.ArchiveId);
         }
     }
 }

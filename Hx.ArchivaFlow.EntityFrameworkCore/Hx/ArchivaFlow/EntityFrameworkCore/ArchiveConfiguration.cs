@@ -13,6 +13,12 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             builder.ToTable("ARC_ARCHIVES");
 
             builder.HasKey(a => a.Id);
+            builder.HasIndex(a => a.ArchiveNo);
+            builder.HasIndex(a => a.Title);
+            builder.HasIndex(a => a.Year);
+            builder.HasIndex(a => a.FilingDate);
+            builder.HasIndex(a => a.Status);
+            builder.HasIndex(a => a.BusinessKey);
 
             builder.Property(a => a.ArchiveNo)
                    .HasMaxLength(ArchivaFlowConsts.ArchiveNoMaxLength)
@@ -30,7 +36,6 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
 
             builder.Property(a => a.FilingDate)
                    .HasColumnName("FILING_DATE")
-                   .IsRequired()
                    .HasColumnType("timestamp with time zone");
 
             builder.Property(a => a.Status)
@@ -39,6 +44,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
 
             builder.Property(a => a.BusinessKey)
                    .HasMaxLength(ArchivaFlowConsts.BusinessKeyMaxLength)
+                   .IsRequired()
                    .HasColumnName("BUSINESS_KEY");
 
             builder.Property(a => a.Remarks)
@@ -47,8 +53,10 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
 
             builder.HasMany(a => a.Metadatas)
                    .WithOne(m => m.Archive)
-                   .HasForeignKey(m => m.ArchiveId);
+                   .HasForeignKey(m => m.ArchiveId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Property(p => p.Id).HasColumnName("ID");
             builder.Property(p => p.ExtraProperties).HasColumnName("EXTRAPROPERTIES");
             builder.Property(p => p.ConcurrencyStamp).HasColumnName("CONCURRENCYSTAMP");
             builder.Property(p => p.CreationTime).HasColumnName("CREATIONTIME").HasColumnType("timestamp with time zone");

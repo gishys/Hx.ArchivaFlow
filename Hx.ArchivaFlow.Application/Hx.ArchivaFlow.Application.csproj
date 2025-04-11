@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="8.1.1" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="8.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hx.ArchivaFlow.Application.Contracts\Hx.ArchivaFlow.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Hx.ArchivaFlow.Domain\Hx.ArchivaFlow.Domain.csproj" />
+    <ProjectReference Include="..\Hx.ArchivaFlow.EntityFrameworkCore\Hx.ArchivaFlow.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

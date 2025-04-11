@@ -2,7 +2,7 @@
 
 namespace Hx.ArchivaFlow.Domain
 {
-    public interface IEfCoreMetadataRepository : IBasicRepository<Metadata, Guid>
+    public interface IEfCoreMetadataRepository : IBasicRepository<Metadata>
     {
     }
 }
