@@ -1,0 +1,6 @@
+@Hx.ArchivaFlow_HostAddress = http://localhost:5080
+
+GET {{Hx.ArchivaFlow_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
