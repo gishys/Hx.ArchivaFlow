@@ -11,6 +11,6 @@ namespace Hx.ArchivaFlow.Application.Contracts
         public DateTime? StartFilingDate { get; set; }
         public DateTime? EndFilingDate { get; set; }
         public ArchiveStatus? Status { get; set; }
-        public Dictionary<string, object>? Metadata { get; set; }
+        public Dictionary<string, string>? Metadata { get; set; }
     }
 }

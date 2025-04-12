@@ -1,6 +1,7 @@
 ﻿using Hx.ArchivaFlow.Domain;
 using Hx.ArchivaFlow.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -26,7 +27,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             DateTime? startFilingDate,
             DateTime? endFilingDate,
             ArchiveStatus? status,
-            IDictionary<string, object>? metadata,
+            IDictionary<string, string>? metadata,
             int skipCount,
             int maxResultCount,
             bool includeDetails = false,
@@ -40,7 +41,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                 .WhereIf(startFilingDate != null, a => a.FilingDate >= startFilingDate)
                 .WhereIf(endFilingDate != null, a => a.FilingDate <= endFilingDate)
                 .WhereIf(status != null, a => a.Status == status)
-                .WhereIf(metadata != null, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value == e.Value.ToString())));
+                .WhereIf(metadata != null, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value.Contains(e.Value))));
             if (includeDetails)
             {
                 query = query.Include(d => d.Metadatas);
@@ -54,7 +55,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             DateTime? startFilingDate,
             DateTime? endFilingDate,
             ArchiveStatus? status,
-            IDictionary<string, object>? metadata,
+            IDictionary<string, string>? metadata,
             CancellationToken cancellationToken = default)
         {
             var dbSet = await GetDbSetAsync();
@@ -65,7 +66,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                 .WhereIf(startFilingDate != null, a => a.FilingDate >= startFilingDate)
                 .WhereIf(endFilingDate != null, a => a.FilingDate <= endFilingDate)
                 .WhereIf(status != null, a => a.Status == status)
-                .WhereIf(metadata != null && metadata.Count > 0, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value == e.Value.ToString())));
+                .WhereIf(metadata != null, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value.Contains(e.Value))));
             return await query.CountAsync(cancellationToken: cancellationToken);
         }
         public async Task<Archive?> FindByArchiveNoAsync(string archiveNo, CancellationToken cancellationToken = default)

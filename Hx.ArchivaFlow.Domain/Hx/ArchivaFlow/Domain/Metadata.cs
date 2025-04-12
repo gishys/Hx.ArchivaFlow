@@ -1,4 +1,5 @@
 ﻿using Hx.ArchivaFlow.Domain.Shared;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Hx.ArchivaFlow.Domain
@@ -87,6 +88,29 @@ namespace Hx.ArchivaFlow.Domain
             if (!string.Equals(NavigationProperty, navigationProperty))
             {
                 NavigationProperty = navigationProperty;
+            }
+        }
+
+        public void ValidateDataType()
+        {
+            switch (DataType)
+            {
+                case MetadataDataType.Number:
+                    if (!double.TryParse(Value, out _))
+                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
+                    break;
+                case MetadataDataType.Date:
+                    if (!DateTime.TryParse(Value, out _))
+                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
+                    break;
+                case MetadataDataType.Boolean:
+                    if (!bool.TryParse(Value, out _))
+                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
+                    break;
+                case MetadataDataType.String:
+                    if (!bool.TryParse(Value, out _))
+                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
+                    break;
             }
         }
 

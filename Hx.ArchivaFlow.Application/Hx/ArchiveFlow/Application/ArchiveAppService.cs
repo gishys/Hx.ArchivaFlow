@@ -22,6 +22,7 @@ namespace Hx.ArchiveFlow.Application
         /// <exception cref="UserFriendlyException"></exception>
         public async Task<ArchiveDto> CreateOrUpdateArchiveAsync(ArchiveCreateOrUpdateDto input)
         {
+
             if (input.Id.HasValue)
             {
                 var existingArchive = await _archiveRepository.GetAsync(input.Id.Value);
@@ -34,6 +35,11 @@ namespace Hx.ArchiveFlow.Application
                         metadataArchiveId,
                         m.NavigationProperty))
                     .ToList() ?? [];
+
+                foreach (var metadata in metadatas)
+                {
+                    metadata.ValidateDataType();
+                }
 
                 var archive = await _archiveDomainService.UpdateArchiveAsync(
                     existingArchive,
@@ -58,6 +64,11 @@ namespace Hx.ArchiveFlow.Application
                         archiveId,
                         m.NavigationProperty))
                     .ToList() ?? [];
+
+                foreach (var metadata in metadatas)
+                {
+                    metadata.ValidateDataType();
+                }
 
                 var archive = await _archiveDomainService.CreateArchiveAsync(
                     archiveId,
