@@ -1,18 +1,23 @@
 ﻿using Hx.ArchivaFlow.Application.Contracts;
 using Hx.ArchivaFlow.Domain;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.PermissionManagement;
 
 namespace Hx.ArchiveFlow.Application
 {
-    public class ArchiveAppService(ArchiveDomainService archiveDomainService,
+    public class ArchiveAppService(
+        ArchiveDomainService archiveDomainService,
         IEfCoreAchiveRepository archiveRepository,
-        IEfCoreMetadataRepository metadataRepository) : ApplicationService
+        IEfCoreMetadataRepository metadataRepository,
+        IServiceProvider serviceProvider) : ApplicationService
     {
         private readonly ArchiveDomainService _archiveDomainService = archiveDomainService;
         private readonly IEfCoreAchiveRepository _archiveRepository = archiveRepository;
         private readonly IEfCoreMetadataRepository _metadataRepository = metadataRepository;
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         /// <summary>
         /// 创建或更新档案及元数据
@@ -128,6 +133,20 @@ namespace Hx.ArchiveFlow.Application
         public async Task DeleteArchiveAsync(Guid id)
         {
             await _archiveRepository.DeleteAsync(id);
+        }
+        /// <summary>
+        /// 创建档案文件
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        [RemoteService(IsEnabled = false)]
+        public async Task CreateFilesAsync(List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode)
+        {
+            var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
+                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+            await archiveFile.CreateFilesAsync(input, mode);
         }
     }
 }
