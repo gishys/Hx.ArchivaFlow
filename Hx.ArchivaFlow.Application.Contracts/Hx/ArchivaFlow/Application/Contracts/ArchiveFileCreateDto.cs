@@ -2,11 +2,12 @@
 {
     public class ArchiveFileCreateDto
     {
-        public ArchiveFileCreateDto(string aliasName, byte[] documentContent, double order)
+        public ArchiveFileCreateDto(Guid catalogueId, string aliasName, byte[] documentContent, double order)
         {
             AliasName = aliasName;
             DocumentContent = documentContent;
             Order = order;
+            CatalogueId = catalogueId;
         }
         public ArchiveFileCreateDto(
             string aliasName,
@@ -23,7 +24,7 @@
             FileSize = fileSize;
             CatalogueId = catalogueId;
         }
-        public required string AliasName { get; set; }
+        public string AliasName { get; set; }
         public byte[]? DocumentContent { get; set; }
         public string? FilePath { get; set; }
         public double? Order { get; set; }

@@ -1,0 +1,47 @@
+﻿using Hx.ArchivaFlow.Application.Contracts;
+using Microsoft.AspNetCore.Mvc;
+using Volo.Abp;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.AspNetCore.Mvc;
+
+namespace Hx.ArchivaFlow.HttpApi
+{
+    [ApiController]
+    [Route("api/app/archive")]
+    public class ArchiveController(
+        IArchiveAppService archiveAppService) : AbpControllerBase
+    {
+        private readonly IArchiveAppService _archiveAppService = archiveAppService;
+
+        [HttpPost]
+        [Route("file")]
+        public async Task CreateFilesAsync(Guid catalogueId, double order, ArchiveFileCreateMode mode)
+        {
+            var files = Request.Form.Files;
+            if (files.Count > 0)
+            {
+                var inputs = new List<ArchiveFileCreateDto>();
+                foreach (var file in files)
+                {
+                    byte[] fileBytes;
+                    using (var fileStream = file.OpenReadStream())
+                    using (var ms = new MemoryStream())
+                    {
+                        fileStream.CopyTo(ms);
+                        fileBytes = ms.ToArray();
+                    }
+                    var attachFile = new ArchiveFileCreateDto(catalogueId, file.Name, fileBytes, order);
+                    inputs.Add(attachFile);
+                }
+                await _archiveAppService.CreateFilesAsync(inputs, mode);
+            }
+            throw new UserFriendlyException("上传文件为空！");
+        }
+        [HttpGet]
+        [Route("paged")]
+        public Task<PagedResultDto<ArchiveDto>> GetPagedAsync(PagedArchiveResultRequestDto input)
+        {
+            return _archiveAppService.GetPagedAsync(input);
+        }
+    }
+}

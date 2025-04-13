@@ -1,14 +1,16 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Hx.ArchivaFlow.HttpApi;
+using Hx.ArchiveFlow.Application;
+using Microsoft.OpenApi.Models;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
-using Volo.Abp;
-using Hx.ArchiveFlow.Application;
 
 namespace Hx.ArchivaFlow
 {
     [DependsOn(typeof(AbpAutofacModule))]
     [DependsOn(typeof(AbpAspNetCoreMvcModule))]
+    [DependsOn(typeof(HxArchivaFlowHttpApiModule))]
     [DependsOn(typeof(HxArchivaFlowApplicationModule))]
     public class AppModule : AbpModule
     {

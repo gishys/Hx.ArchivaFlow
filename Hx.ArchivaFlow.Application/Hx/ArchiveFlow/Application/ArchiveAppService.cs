@@ -12,7 +12,7 @@ namespace Hx.ArchiveFlow.Application
         ArchiveDomainService archiveDomainService,
         IEfCoreAchiveRepository archiveRepository,
         IEfCoreMetadataRepository metadataRepository,
-        IServiceProvider serviceProvider) : ApplicationService
+        IServiceProvider serviceProvider) : ApplicationService,IArchiveAppService
     {
         private readonly ArchiveDomainService _archiveDomainService = archiveDomainService;
         private readonly IEfCoreAchiveRepository _archiveRepository = archiveRepository;
@@ -93,6 +93,8 @@ namespace Hx.ArchiveFlow.Application
         /// <summary>
         /// 查询单个档案
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ArchiveDto?> GetArchiveAsync(Guid id)
         {
             var archive = await _archiveRepository.FindAsync(id);
@@ -102,7 +104,10 @@ namespace Hx.ArchiveFlow.Application
         /// <summary>
         /// 分页查询档案
         /// </summary>
-        public async Task<PagedResultDto<ArchiveDto>> GetPagedArchivesAsync(PagedArchiveResultRequestDto input)
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [RemoteService(IsEnabled = false)]
+        public async Task<PagedResultDto<ArchiveDto>> GetPagedAsync(PagedArchiveResultRequestDto input)
         {
             var totalCount = await _archiveRepository.GetCountAsync(
                 input.ArchiveNo,
@@ -130,6 +135,8 @@ namespace Hx.ArchiveFlow.Application
         /// <summary>
         /// 删除档案
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task DeleteArchiveAsync(Guid id)
         {
             await _archiveRepository.DeleteAsync(id);

@@ -11,11 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hx.ArchivaFlow.Domain.Share
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hx.ArchivaFlow.EntityFrameworkCore", "Hx.ArchivaFlow.EntityFrameworkCore\Hx.ArchivaFlow.EntityFrameworkCore.csproj", "{7A72658F-947D-466E-A88F-40D8BA07738E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hx.ArchivaFlow.Application.Contracts", "Hx.ArchivaFlow.Application.Contracts\Hx.ArchivaFlow.Application.Contracts.csproj", "{F5FFF22F-D75C-4187-A8A3-6D8A47AB8F26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hx.ArchivaFlow.Application.Contracts", "Hx.ArchivaFlow.Application.Contracts\Hx.ArchivaFlow.Application.Contracts.csproj", "{F5FFF22F-D75C-4187-A8A3-6D8A47AB8F26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hx.ArchivaFlow.Application", "Hx.ArchivaFlow.Application\Hx.ArchivaFlow.Application.csproj", "{CCD8BEA7-8A8B-4780-8DC2-7F72B75528D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hx.ArchivaFlow.Application", "Hx.ArchivaFlow.Application\Hx.ArchivaFlow.Application.csproj", "{CCD8BEA7-8A8B-4780-8DC2-7F72B75528D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hx.ArchivaFlow.Migrations", "Hx.ArchivaFlow.Migrations\Hx.ArchivaFlow.Migrations.csproj", "{ED91A9D7-61F5-44F2-AC6C-8840B53CB227}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hx.ArchivaFlow.Migrations", "Hx.ArchivaFlow.Migrations\Hx.ArchivaFlow.Migrations.csproj", "{ED91A9D7-61F5-44F2-AC6C-8840B53CB227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hx.ArchivaFlow.HttpApi", "Hx.ArchivaFlow.HttpApi\Hx.ArchivaFlow.HttpApi.csproj", "{381BA86A-02B2-4127-BC3C-53B3CF6DE921}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{ED91A9D7-61F5-44F2-AC6C-8840B53CB227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED91A9D7-61F5-44F2-AC6C-8840B53CB227}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED91A9D7-61F5-44F2-AC6C-8840B53CB227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{381BA86A-02B2-4127-BC3C-53B3CF6DE921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{381BA86A-02B2-4127-BC3C-53B3CF6DE921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{381BA86A-02B2-4127-BC3C-53B3CF6DE921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{381BA86A-02B2-4127-BC3C-53B3CF6DE921}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
