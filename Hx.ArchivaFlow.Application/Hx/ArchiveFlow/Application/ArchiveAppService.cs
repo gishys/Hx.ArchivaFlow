@@ -155,5 +155,55 @@ namespace Hx.ArchiveFlow.Application
                 ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
             await archiveFile.CreateFilesAsync(input, mode);
         }
+        /// <summary>
+        /// 创建档案目录
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        public async Task CreateCatalogueAsync(List<ArchiveCatalogueCreateDto> input, ArchiveCatalogueCreateMode mode)
+        {
+            var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
+                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+            await archiveFile.CreateCatalogueAsync(input, mode);
+        }
+        /// <summary>
+        /// 删除档案文件
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        public async Task DeleteFileAsync(Guid id)
+        {
+            var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
+                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+            await archiveFile.DeleteFileAsync(id);
+        }
+        /// <summary>
+        /// 删除档案目录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        public async Task DeleteCatalogueAsync(Guid id)
+        {
+            var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
+                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+            await archiveFile.DeleteCatalogueAsync(id);
+        }
+        /// <summary>
+        /// 通过业务编号获取档案目录及文件列表
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        [RemoteService(IsEnabled = false)]
+        public async Task GetListByReferenceAsync(GetArchiveCatalogueListInput input)
+        {
+            var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
+                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+            await archiveFile.GetListByReferenceAsync(input);
+        }
     }
 }

@@ -39,5 +39,34 @@ namespace Hx.ArchivaFlow.Application.Contracts
         /// <returns></returns>
         /// <exception cref="UserFriendlyException"></exception>
         Task CreateFilesAsync(List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode);
+        /// <summary>
+        /// 创建档案目录
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        Task CreateCatalogueAsync(List<ArchiveCatalogueCreateDto> input, ArchiveCatalogueCreateMode mode);
+        /// <summary>
+        /// 删除档案文件
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        Task DeleteFileAsync(Guid id);
+        /// <summary>
+        /// 删除档案目录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        Task DeleteCatalogueAsync(Guid id);
+        /// <summary>
+        /// 通过业务编号获取档案目录及文件列表
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        Task GetListByReferenceAsync(GetArchiveCatalogueListInput input);
     }
 }

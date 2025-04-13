@@ -14,7 +14,7 @@ namespace Hx.ArchivaFlow.HttpApi
         private readonly IArchiveAppService _archiveAppService = archiveAppService;
 
         [HttpPost]
-        [Route("file")]
+        [Route("files")]
         public async Task CreateFilesAsync(Guid catalogueId, double order, ArchiveFileCreateMode mode)
         {
             var files = Request.Form.Files;
@@ -42,6 +42,12 @@ namespace Hx.ArchivaFlow.HttpApi
         public Task<PagedResultDto<ArchiveDto>> GetPagedAsync(PagedArchiveResultRequestDto input)
         {
             return _archiveAppService.GetPagedAsync(input);
+        }
+        [HttpGet]
+        [Route("archive-file-list-by-reference")]
+        public Task GetListByReferenceAsync(GetArchiveCatalogueListInput input)
+        {
+            return _archiveAppService.GetListByReferenceAsync(input);
         }
     }
 }
