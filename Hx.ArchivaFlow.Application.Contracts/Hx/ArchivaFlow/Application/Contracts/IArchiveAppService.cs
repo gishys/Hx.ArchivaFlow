@@ -38,7 +38,7 @@ namespace Hx.ArchivaFlow.Application.Contracts
         /// <param name="mode"></param>
         /// <returns></returns>
         /// <exception cref="UserFriendlyException"></exception>
-        Task CreateFilesAsync(List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode);
+        Task CreateFilesAsync(Guid catalogueId, List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode);
         /// <summary>
         /// 创建档案目录
         /// </summary>
@@ -67,6 +67,6 @@ namespace Hx.ArchivaFlow.Application.Contracts
         /// <param name="input"></param>
         /// <returns></returns>
         /// <exception cref="UserFriendlyException"></exception>
-        Task GetListByReferenceAsync(GetArchiveCatalogueListInput input);
+        Task<List<ArchiveCatalogueDto>> GetListByReferenceAsync(List<GetArchiveCatalogueListInput> input);
     }
 }

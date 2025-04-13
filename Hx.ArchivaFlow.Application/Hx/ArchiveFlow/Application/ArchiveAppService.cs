@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.PermissionManagement;
 
 namespace Hx.ArchiveFlow.Application
 {
@@ -12,7 +11,7 @@ namespace Hx.ArchiveFlow.Application
         ArchiveDomainService archiveDomainService,
         IEfCoreAchiveRepository archiveRepository,
         IEfCoreMetadataRepository metadataRepository,
-        IServiceProvider serviceProvider) : ApplicationService,IArchiveAppService
+        IServiceProvider serviceProvider) : ApplicationService, IArchiveAppService
     {
         private readonly ArchiveDomainService _archiveDomainService = archiveDomainService;
         private readonly IEfCoreAchiveRepository _archiveRepository = archiveRepository;
@@ -149,11 +148,11 @@ namespace Hx.ArchiveFlow.Application
         /// <returns></returns>
         /// <exception cref="UserFriendlyException"></exception>
         [RemoteService(IsEnabled = false)]
-        public async Task CreateFilesAsync(List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode)
+        public async Task CreateFilesAsync(Guid catalogueId, List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode)
         {
             var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
                 ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
-            await archiveFile.CreateFilesAsync(input, mode);
+            await archiveFile.CreateFilesAsync(catalogueId, input, mode);
         }
         /// <summary>
         /// 创建档案目录
@@ -199,11 +198,11 @@ namespace Hx.ArchiveFlow.Application
         /// <returns></returns>
         /// <exception cref="UserFriendlyException"></exception>
         [RemoteService(IsEnabled = false)]
-        public async Task GetListByReferenceAsync(GetArchiveCatalogueListInput input)
+        public async Task<List<ArchiveCatalogueDto>> GetListByReferenceAsync(List<GetArchiveCatalogueListInput> input)
         {
             var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
                 ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
-            await archiveFile.GetListByReferenceAsync(input);
+            return await archiveFile.GetListByReferenceAsync(input);
         }
     }
 }

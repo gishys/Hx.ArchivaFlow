@@ -1,11 +1,13 @@
-﻿namespace Hx.ArchivaFlow.Application.Contracts
+﻿using Volo.Abp.Application.Services;
+
+namespace Hx.ArchivaFlow.Application.Contracts
 {
-    public interface IArchiveFileAppService
+    public interface IArchiveFileAppService : IApplicationService
     {
-        Task CreateFilesAsync(List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode);
-        Task CreateCatalogueAsync(List<ArchiveCatalogueCreateDto> input, ArchiveCatalogueCreateMode mode);
+        Task CreateFilesAsync(Guid catalogueId, List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode);
+        Task<List<ArchiveCatalogueDto>> CreateCatalogueAsync(List<ArchiveCatalogueCreateDto> input, ArchiveCatalogueCreateMode mode);
         Task DeleteFileAsync(Guid id);
         Task DeleteCatalogueAsync(Guid id);
-        Task GetListByReferenceAsync(GetArchiveCatalogueListInput input);
+        Task<List<ArchiveCatalogueDto>> GetListByReferenceAsync(List<GetArchiveCatalogueListInput> input);
     }
 }

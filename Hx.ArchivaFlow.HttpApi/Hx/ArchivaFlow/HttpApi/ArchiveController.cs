@@ -33,7 +33,7 @@ namespace Hx.ArchivaFlow.HttpApi
                     var attachFile = new ArchiveFileCreateDto(catalogueId, file.Name, fileBytes, order);
                     inputs.Add(attachFile);
                 }
-                await _archiveAppService.CreateFilesAsync(inputs, mode);
+                await _archiveAppService.CreateFilesAsync(catalogueId, inputs, mode);
             }
             throw new UserFriendlyException("上传文件为空！");
         }
@@ -45,7 +45,7 @@ namespace Hx.ArchivaFlow.HttpApi
         }
         [HttpGet]
         [Route("archive-file-list-by-reference")]
-        public Task GetListByReferenceAsync(GetArchiveCatalogueListInput input)
+        public Task<List<ArchiveCatalogueDto>> GetListByReferenceAsync(List<GetArchiveCatalogueListInput> input)
         {
             return _archiveAppService.GetListByReferenceAsync(input);
         }
