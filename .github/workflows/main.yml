@@ -1,0 +1,54 @@
+name: Multi-package NuGet ArchivaFlow
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0.104'
+        
+    - name: Build and pack NuGet packages
+      run: |
+        version=$(echo "${{ github.event.release.tag_name }}" | cut -c 2-)
+        echo "Setting version to $version"
+        dotnet build Hx.ArchivaFlow.Application/Hx.ArchivaFlow.Application.csproj -c Release
+        dotnet pack Hx.ArchivaFlow.Application/Hx.ArchivaFlow.Application.csproj -c Release -o ./Hx.ArchivaFlow.Application /p:PackageVersion=$version
+        dotnet build Hx.ArchivaFlow.Application.Contracts/Hx.ArchivaFlow.Application.Contracts.csproj -c Release
+        dotnet pack Hx.ArchivaFlow.Application.Contracts/Hx.ArchivaFlow.Application.Contracts.csproj -c Release -o ./Hx.ArchivaFlow.Application.Contracts /p:PackageVersion=$version
+        dotnet build Hx.ArchivaFlow.Domain/Hx.ArchivaFlow.Domain.csproj -c Release
+        dotnet pack Hx.ArchivaFlow.Domain/Hx.ArchivaFlow.Domain.csproj -c Release -o ./Hx.ArchivaFlow.Domain /p:PackageVersion=$version
+        dotnet build Hx.ArchivaFlow.Domain.Shared/Hx.ArchivaFlow.Domain.Shared.csproj -c Release
+        dotnet pack Hx.ArchivaFlow.Domain.Shared/Hx.ArchivaFlow.Domain.Shared.csproj -c Release -o ./Hx.ArchivaFlow.Domain.Shared /p:PackageVersion=$version
+        dotnet build Hx.ArchivaFlow.EntityFrameworkCore/Hx.ArchivaFlow.EntityFrameworkCore.csproj -c Release
+        dotnet pack Hx.ArchivaFlow.EntityFrameworkCore/Hx.ArchivaFlow.EntityFrameworkCore.csproj -c Release -o ./Hx.ArchivaFlow.EntityFrameworkCore /p:PackageVersion=$version
+		dotnet build Hx.ArchivaFlow.Attachment.Application/Hx.ArchivaFlow.Attachment.Application.csproj -c Release
+        dotnet pack Hx.ArchivaFlow.Attachment.Application/Hx.ArchivaFlow.Attachment.Application.csproj -c Release -o ./Hx.ArchivaFlow.Attachment.Application /p:PackageVersion=$version
+		dotnet build Hx.ArchivaFlow.HttpApi/Hx.ArchivaFlow.HttpApi.csproj -c Release
+        dotnet pack Hx.ArchivaFlow.HttpApi/Hx.ArchivaFlow.HttpApi.csproj -c Release -o ./Hx.ArchivaFlow.HttpApi /p:PackageVersion=$version
+        cp ./Hx.ArchivaFlow.Application/*.nupkg $GITHUB_WORKSPACE
+        cp ./Hx.ArchivaFlow.Application.Contracts/*.nupkg $GITHUB_WORKSPACE
+        cp ./Hx.ArchivaFlow.Domain/*.nupkg $GITHUB_WORKSPACE
+        cp ./Hx.ArchivaFlow.Domain.Shared/*.nupkg $GITHUB_WORKSPACE
+        cp ./Hx.ArchivaFlow.EntityFrameworkCore/*.nupkg $GITHUB_WORKSPACE
+		cp ./Hx.ArchivaFlow.Attachment.Application/*.nupkg $GITHUB_WORKSPACE
+		cp ./Hx.ArchivaFlow.HttpApi/*.nupkg $GITHUB_WORKSPACE
+
+    - name: Push NuGet packages
+      run: |
+        dotnet nuget push ./Hx.ArchivaFlow.Application/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        dotnet nuget push ./Hx.ArchivaFlow.Application.Contracts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        dotnet nuget push ./Hx.ArchivaFlow.Domain/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        dotnet nuget push ./Hx.ArchivaFlow.Domain.Shared/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        dotnet nuget push ./Hx.ArchivaFlow.EntityFrameworkCore/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+		dotnet nuget push ./Hx.ArchivaFlow.Attachment.Application/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        dotnet nuget push ./Hx.ArchivaFlow.HttpApi/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
