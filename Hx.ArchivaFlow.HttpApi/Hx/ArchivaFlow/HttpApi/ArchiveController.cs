@@ -37,13 +37,13 @@ namespace Hx.ArchivaFlow.HttpApi
             }
             throw new UserFriendlyException("上传文件为空！");
         }
-        [HttpGet]
+        [HttpPost]
         [Route("paged")]
         public Task<PagedResultDto<ArchiveDto>> GetPagedAsync(PagedArchiveResultRequestDto input)
         {
             return _archiveAppService.GetPagedAsync(input);
         }
-        [HttpGet]
+        [HttpPost]
         [Route("archive-file-list-by-reference")]
         public Task<List<ArchiveCatalogueDto>> GetListByReferenceAsync(List<GetArchiveCatalogueListInput> input)
         {

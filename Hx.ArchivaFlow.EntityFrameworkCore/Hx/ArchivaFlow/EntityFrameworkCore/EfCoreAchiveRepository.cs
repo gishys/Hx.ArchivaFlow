@@ -1,7 +1,6 @@
 ﻿using Hx.ArchivaFlow.Domain;
 using Hx.ArchivaFlow.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -27,7 +26,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             DateTime? startFilingDate,
             DateTime? endFilingDate,
             ArchiveStatus? status,
-            IDictionary<string, string>? metadata,
+            IDictionary<string, object>? metadata,
             int skipCount,
             int maxResultCount,
             bool includeDetails = false,
@@ -40,13 +39,32 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                 .WhereIf(year != null, a => a.Year == year)
                 .WhereIf(startFilingDate != null, a => a.FilingDate >= startFilingDate)
                 .WhereIf(endFilingDate != null, a => a.FilingDate <= endFilingDate)
-                .WhereIf(status != null, a => a.Status == status)
-                .WhereIf(metadata != null, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value.Contains(e.Value))));
+                .WhereIf(status != null, a => a.Status == status);
+
+            // 处理metadata条件
+            if (metadata != null)
+            {
+                foreach (var kvp in metadata)
+                {
+                    if (kvp.Value == null) continue;
+
+                    string key = kvp.Key;
+                    string value = kvp.Value.ToString()!;
+
+                    query = query.Where(a => a.Metadatas
+                        .Any(m => m.Key == key && m.Value.Contains(value)));
+                }
+            }
+
             if (includeDetails)
             {
                 query = query.Include(d => d.Metadatas);
             }
-            return await query.OrderByDescending(d => d.CreationTime).PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken: cancellationToken);
+
+            return await query
+                .OrderByDescending(d => d.CreationTime)
+                .PageBy(skipCount, maxResultCount)
+                .ToListAsync(cancellationToken);
         }
         public async Task<long> GetCountAsync(
             string? archiveNo,
@@ -55,7 +73,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             DateTime? startFilingDate,
             DateTime? endFilingDate,
             ArchiveStatus? status,
-            IDictionary<string, string>? metadata,
+            IDictionary<string, object>? metadata,
             CancellationToken cancellationToken = default)
         {
             var dbSet = await GetDbSetAsync();
@@ -65,8 +83,22 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                 .WhereIf(year != null, a => a.Year == year)
                 .WhereIf(startFilingDate != null, a => a.FilingDate >= startFilingDate)
                 .WhereIf(endFilingDate != null, a => a.FilingDate <= endFilingDate)
-                .WhereIf(status != null, a => a.Status == status)
-                .WhereIf(metadata != null, a => a.Metadatas.Any(m => metadata != null && metadata.Any(e => m.Key == e.Key && m.Value.Contains(e.Value))));
+                .WhereIf(status != null, a => a.Status == status);
+
+            if (metadata != null)
+            {
+                foreach (var kvp in metadata)
+                {
+                    if (kvp.Value == null) continue;
+
+                    string key = kvp.Key;
+                    string value = kvp.Value.ToString()!;
+
+                    query = query.Where(a => a.Metadatas
+                        .Any(m => m.Key == key && m.Value.Contains(value)));
+                }
+            }
+
             return await query.CountAsync(cancellationToken: cancellationToken);
         }
         public async Task<Archive?> FindByArchiveNoAsync(string archiveNo, CancellationToken cancellationToken = default)

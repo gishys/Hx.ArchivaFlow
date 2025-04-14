@@ -2,15 +2,18 @@
 using Hx.Abp.Attachment.Domain.Shared;
 using Hx.ArchivaFlow.Application.Contracts;
 using Hx.ArchivaFlow.Domain.Shared;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Hx.ArchivaFlow.Attachment.Application
 {
     public class ArchiveFileAppService(
-        IAttachCatalogueAppService catalogueAppService
+        IAttachCatalogueAppService catalogueAppService,
+        HttpClient httpClient
             ) : ApplicationService, IArchiveFileAppService
     {
         private readonly IAttachCatalogueAppService _catalogueAppService = catalogueAppService;
+        private readonly HttpClient _httpClient = httpClient;
 
         public async Task<List<ArchiveCatalogueDto>> CreateCatalogueAsync(List<ArchiveCatalogueCreateDto> input, ArchiveCatalogueCreateMode mode)
         {
@@ -49,6 +52,29 @@ namespace Hx.ArchivaFlow.Attachment.Application
                                 FileAlias = file.AliasName,
                                 DocumentContent = file.DocumentContent
                             });
+                        }
+                    }
+                    var result = await _catalogueAppService.CreateFilesAsync(catalogueId, list);
+                }
+                else if (item.Key == ArchiveFileType.Path)
+                {
+                    var list = new List<AttachFileCreateDto>();
+                    foreach (var file in item.ToList())
+                    {
+                        try
+                        {
+                            HttpResponseMessage response = await _httpClient.GetAsync(file.FilePath);
+                            response.EnsureSuccessStatusCode();
+                            var documentContent = await response.Content.ReadAsByteArrayAsync();
+                            list.Add(new AttachFileCreateDto()
+                            {
+                                FileAlias = file.AliasName,
+                                DocumentContent = documentContent
+                            });
+                        }
+                        catch (HttpRequestException ex)
+                        {
+                            throw new UserFriendlyException(ex.StackTrace ?? ex.Message);
                         }
                     }
                     var result = await _catalogueAppService.CreateFilesAsync(catalogueId, list);

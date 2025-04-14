@@ -4,6 +4,9 @@
     "Permission:ArchivaFlow": "档案管理",
     "Permission:ArchivaFlow.Default": "档案管理",
     "Permission:ArchivaFlow.CreateOrUpdate": "编辑",
-    "Permission:ArchivaFlow.Delete": "删除"
+    "Permission:ArchivaFlow.Delete": "删除",
+    "Permission:ArchivaFlow.CreateAttachment": "创建附件",
+    "Permission:ArchivaFlow.DeleteAttachment": "删除附件",
+    "Permission:ArchivaFlow.AttachmentList": "附件列表"
   }
 }

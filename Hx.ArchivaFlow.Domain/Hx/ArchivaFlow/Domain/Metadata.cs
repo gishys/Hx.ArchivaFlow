@@ -107,10 +107,6 @@ namespace Hx.ArchivaFlow.Domain
                     if (!bool.TryParse(Value, out _))
                         throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
                     break;
-                case MetadataDataType.String:
-                    if (!bool.TryParse(Value, out _))
-                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
-                    break;
             }
         }
 

@@ -12,7 +12,7 @@ namespace Hx.ArchivaFlow.Domain
             DateTime? startFilingDate,
             DateTime? endFilingDate,
             ArchiveStatus? status,
-            IDictionary<string, string>? metadata,
+            IDictionary<string, object>? metadata,
             int skipCount,
             int maxResultCount,
             bool includeDetails = false,
@@ -24,7 +24,7 @@ namespace Hx.ArchivaFlow.Domain
             DateTime? startFilingDate,
             DateTime? endFilingDate,
             ArchiveStatus? status,
-            IDictionary<string, string>? metadata,
+            IDictionary<string, object>? metadata,
             CancellationToken cancellationToken = default);
         Task<Archive?> FindByArchiveNoAsync(string archiveNo, CancellationToken cancellationToken = default);
     }
