@@ -91,6 +91,17 @@ namespace Hx.ArchiveFlow.Application
         /// <summary>
         /// 查询单个档案
         /// </summary>
+        /// <param name="businessKey"></param>
+        /// <returns></returns>
+        public async Task<ArchiveDto?> GetArchiveByBusinessKeyAsync(string businessKey)
+        {
+            var archive = await _archiveRepository.FindByBusinessKeyAsync(businessKey);
+            return ObjectMapper.Map<Archive?, ArchiveDto?>(archive);
+        }
+
+        /// <summary>
+        /// 查询单个档案
+        /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ArchiveDto?> GetArchiveAsync(Guid id)

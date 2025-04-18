@@ -107,5 +107,11 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             var query = from menu in dbContext.Archives where menu.ArchiveNo == archiveNo select menu;
             return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }
+        public async Task<Archive?> FindByBusinessKeyAsync(string businessKey, CancellationToken cancellationToken = default)
+        {
+            var dbContext = await GetDbContextAsync();
+            var query = from menu in dbContext.Archives where menu.BusinessKey == businessKey select menu;
+            return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        }
     }
 }

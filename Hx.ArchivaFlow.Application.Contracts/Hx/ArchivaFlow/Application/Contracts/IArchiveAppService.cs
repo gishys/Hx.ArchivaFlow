@@ -16,6 +16,12 @@ namespace Hx.ArchivaFlow.Application.Contracts
         /// <summary>
         /// 查询单个档案
         /// </summary>
+        /// <param name="businessKey"></param>
+        /// <returns></returns>
+        Task<ArchiveDto?> GetArchiveByBusinessKeyAsync(string businessKey);
+        /// <summary>
+        /// 查询单个档案
+        /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         Task<ArchiveDto?> GetArchiveAsync(Guid id);

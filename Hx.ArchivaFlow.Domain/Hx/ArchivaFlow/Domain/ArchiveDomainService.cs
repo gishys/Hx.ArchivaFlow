@@ -26,6 +26,7 @@ namespace Hx.ArchivaFlow.Domain
             List<Metadata> metadatas)
         {
             await ValidateArchiveNoUniquenessAsync(archiveNo);
+            await ValidateArchiveBusinessKeyUniquenessAsync(businessKey);
             var archive = new Archive(id, archiveNo, title, year, filingDate, status, businessKey, remarks);
             foreach (var metadata in metadatas)
             {
@@ -65,6 +66,7 @@ namespace Hx.ArchivaFlow.Domain
             }
             if (!string.Equals(archiveToUpdate.BusinessKey, newBusinessKey))
             {
+                await ValidateArchiveBusinessKeyUniquenessAsync(newBusinessKey);
                 archiveToUpdate.SetBusinessKey(newBusinessKey);
             }
             if (!string.Equals(archiveToUpdate.Remarks, newRemarks))
@@ -96,8 +98,17 @@ namespace Hx.ArchivaFlow.Domain
             var existing = await _archiveRepository.FindByArchiveNoAsync(archiveNo);
             if (existing != null)
             {
-                throw new BusinessException("菜单名称已经存在！")
+                throw new BusinessException("档案编号已经存在！")
                     .WithData("ArchiveNo", archiveNo);
+            }
+        }
+        private async Task ValidateArchiveBusinessKeyUniquenessAsync(string businessKey)
+        {
+            var existing = await _archiveRepository.FindByBusinessKeyAsync(businessKey);
+            if (existing != null)
+            {
+                throw new BusinessException("业务编号已经存在！")
+                    .WithData("BusinessKey", businessKey);
             }
         }
     }
