@@ -17,6 +17,6 @@ namespace Hx.ArchivaFlow.Application.Contracts
         public ArchiveStatus Status { get; set; }
         public required string BusinessKey { get; set; }
         public required string Remarks { get; set; }
-        public List<MetadataDto>? Metadatas { get; set; }
+        public List<MetadataCreateOrUpdateDto>? Metadatas { get; set; }
     }
 }

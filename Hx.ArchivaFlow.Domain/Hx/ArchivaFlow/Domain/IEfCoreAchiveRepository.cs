@@ -26,7 +26,7 @@ namespace Hx.ArchivaFlow.Domain
             ArchiveStatus? status,
             IDictionary<string, object>? metadata,
             CancellationToken cancellationToken = default);
-        Task<Archive?> FindByArchiveNoAsync(string archiveNo, CancellationToken cancellationToken = default);
-        Task<Archive?> FindByBusinessKeyAsync(string businessKey, CancellationToken cancellationToken = default);
+        Task<Archive?> FindByArchiveNoAsync(string archiveNo, bool includeDetails = true, CancellationToken cancellationToken = default);
+        Task<Archive?> FindByBusinessKeyAsync(string businessKey, bool includeDetails = true, CancellationToken cancellationToken = default);
     }
 }
