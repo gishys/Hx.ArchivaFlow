@@ -50,6 +50,12 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                         .HasColumnType("character varying(40)")
                         .HasColumnName("CONCURRENCYSTAMP");
 
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("CONTENTTYPE");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("CREATIONTIME");
@@ -89,10 +95,22 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LASTMODIFIERID");
 
+                    b.Property<byte>("MediaType")
+                        .HasColumnType("smallint")
+                        .HasColumnName("MEDIATYPE");
+
                     b.Property<string>("Remarks")
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("REMARKS");
+
+                    b.Property<byte>("RetentionPeriod")
+                        .HasColumnType("smallint")
+                        .HasColumnName("RETENTIONPERIOD");
+
+                    b.Property<byte>("SecretLevel")
+                        .HasColumnType("smallint")
+                        .HasColumnName("SECRETLEVEL");
 
                     b.Property<byte>("Status")
                         .HasColumnType("smallint")
@@ -148,6 +166,10 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("DATA_TYPE");
 
+                    b.Property<bool>("IsStatic")
+                        .HasColumnType("boolean")
+                        .HasColumnName("ISSTATIC");
+
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("LASTMODIFICATIONTIME");
@@ -160,6 +182,16 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("NAVIGATION_PROPERTY");
+
+                    b.Property<double>("Order")
+                        .HasColumnType("double precision")
+                        .HasColumnName("ORDER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("TITLE");
 
                     b.Property<string>("Value")
                         .IsRequired()

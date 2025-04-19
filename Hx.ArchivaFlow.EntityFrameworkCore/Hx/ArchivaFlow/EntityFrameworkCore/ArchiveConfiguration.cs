@@ -36,6 +36,23 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                    .HasColumnName("YEAR")
                    .IsRequired();
 
+            builder.Property(a => a.ContentType)
+                   .HasMaxLength(ArchivaFlowConsts.ContentTypeMaxLength)
+                   .HasColumnName("CONTENTTYPE")
+                   .IsRequired();
+
+            builder.Property(a => a.MediaType)
+                   .HasColumnName("MEDIATYPE")
+                   .IsRequired();
+
+            builder.Property(a => a.SecretLevel)
+                   .HasColumnName("SECRETLEVEL")
+                   .IsRequired();
+
+            builder.Property(a => a.RetentionPeriod)
+                   .HasColumnName("RETENTIONPERIOD")
+                   .IsRequired();
+
             builder.Property(a => a.FilingDate)
                    .HasColumnName("FILING_DATE")
                    .HasColumnType("timestamp with time zone");

@@ -1,9 +1,4 @@
 ﻿using Hx.ArchivaFlow.Domain.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hx.ArchivaFlow.Application.Contracts
 {
@@ -13,5 +8,19 @@ namespace Hx.ArchivaFlow.Application.Contracts
         public required string Value { get; set; }
         public MetadataDataType DataType { get; set; }
         public string? NavigationProperty { get; set; }
+        /// <summary>
+        /// 顺序
+        /// </summary>
+        public double Order { get; set; }
+
+        /// <summary>
+        /// 元数据标题
+        /// </summary>
+        public required string Title { get; set; }
+
+        /// <summary>
+        /// 是否静态
+        /// </summary>
+        public bool IsStatic { get; set; }
     }
 }

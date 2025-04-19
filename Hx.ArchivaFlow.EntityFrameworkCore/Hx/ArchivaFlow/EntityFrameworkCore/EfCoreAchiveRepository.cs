@@ -15,7 +15,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             var query = from menu in dbContext.Archives where menu.Id == id select menu;
             if (includeDetails)
             {
-                query = query.Include(d => d.Metadatas);
+                query = query.Include(d => d.Metadatas.OrderBy(d => d.Order));
             }
             return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }
@@ -58,7 +58,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
 
             if (includeDetails)
             {
-                query = query.Include(d => d.Metadatas);
+                query = query.Include(d => d.Metadatas.OrderBy(d => d.Order));
             }
 
             return await query
@@ -107,7 +107,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             var query = from menu in dbContext.Archives where menu.ArchiveNo == archiveNo select menu;
             if (includeDetails)
             {
-                query = query.Include(d => d.Metadatas);
+                query = query.Include(d => d.Metadatas.OrderBy(d => d.Order));
             }
             return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }
@@ -117,7 +117,7 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
             var query = from menu in dbContext.Archives where menu.BusinessKey == businessKey select menu;
             if (includeDetails)
             {
-                query = query.Include(d => d.Metadatas);
+                query = query.Include(d => d.Metadatas.OrderBy(d => d.Order));
             }
             return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
         }

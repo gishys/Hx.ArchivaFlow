@@ -36,6 +36,17 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                    .HasColumnName("ARCHIVE_ID")
                    .IsRequired();
 
+            builder.Property(m => m.Title)
+                .HasColumnName("TITLE")
+                .HasMaxLength(ArchivaFlowConsts.MetadataTitleMaxLength)
+                .IsRequired();
+
+            builder.Property(m => m.Order)
+                .HasColumnName("ORDER");
+
+            builder.Property(m => m.IsStatic)
+                .HasColumnName("ISSTATIC");
+
             builder.Property(m => m.NavigationProperty)
                 .HasMaxLength(ArchivaFlowConsts.MetadataNavigationPropertyMaxLength)
                    .HasColumnName("NAVIGATION_PROPERTY");

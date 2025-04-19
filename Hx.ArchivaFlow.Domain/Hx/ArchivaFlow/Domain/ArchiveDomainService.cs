@@ -23,11 +23,15 @@ namespace Hx.ArchivaFlow.Domain
             ArchiveStatus status,
             string businessKey,
             string? remarks,
+            string contentType,
+            MediaCatagory mediaType,
+            SecretLevelCategory secretLevel,
+            RetensionPeriodCategory retensionPeriod,
             List<Metadata> metadatas)
         {
             await ValidateArchiveNoUniquenessAsync(archiveNo);
             await ValidateArchiveBusinessKeyUniquenessAsync(businessKey);
-            var archive = new Archive(id, archiveNo, title, year, filingDate, status, businessKey, remarks);
+            var archive = new Archive(id, archiveNo, title, year, filingDate, status, businessKey, remarks, contentType, mediaType, secretLevel, retensionPeriod);
             foreach (var metadata in metadatas)
             {
                 await _metadataRepository.InsertAsync(metadata);
@@ -46,6 +50,10 @@ namespace Hx.ArchivaFlow.Domain
             ArchiveStatus newStatus,
             string newBusinessKey,
             string? newRemarks,
+            string contentType,
+            MediaCatagory mediaType,
+            SecretLevelCategory secretLevel,
+            RetensionPeriodCategory retensionPeriod,
             List<Metadata> metadatas)
         {
             if (!string.Equals(archiveToUpdate.Title, newTitle))
@@ -73,6 +81,23 @@ namespace Hx.ArchivaFlow.Domain
             {
                 archiveToUpdate.SetRemarks(newRemarks);
             }
+            if (!string.Equals(archiveToUpdate.ContentType, contentType))
+            {
+                archiveToUpdate.SetContentType(contentType);
+            }
+            if (archiveToUpdate.MediaType != mediaType)
+            {
+                archiveToUpdate.SetMediaType(mediaType);
+            }
+            if (archiveToUpdate.SecretLevel != secretLevel)
+            {
+                archiveToUpdate.SetSecretLevel(secretLevel);
+            }
+            if (archiveToUpdate.RetentionPeriod != retensionPeriod)
+            {
+                archiveToUpdate.SetRetentionPeriod(retensionPeriod);
+            }
+
             archiveToUpdate.UpdateMetadata(metadatas);
 
             return await _archiveRepository.UpdateAsync(archiveToUpdate);
@@ -84,6 +109,18 @@ namespace Hx.ArchivaFlow.Domain
         public async Task DeleteArchiveAsync(Guid archiveId)
         {
             await _archiveRepository.DeleteAsync(archiveId);
+        }
+
+        /// <summary>
+        /// 更新元数据值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="archiveId"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<Metadata> UpdateByKeysAsync(string key, Guid archiveId, string value)
+        {
+            return await _metadataRepository.UpdateByKeysAsync(key, archiveId, value);
         }
 
         /// <summary>

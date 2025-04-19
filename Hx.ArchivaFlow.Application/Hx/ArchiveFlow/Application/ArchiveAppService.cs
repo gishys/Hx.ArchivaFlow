@@ -36,7 +36,10 @@ namespace Hx.ArchiveFlow.Application
                         m.Value,
                         m.DataType,
                         metadataArchiveId,
-                        m.NavigationProperty))
+                        m.NavigationProperty,
+                        m.Order,
+                        m.Title,
+                        m.IsStatic))
                     .ToList() ?? [];
 
                 foreach (var metadata in metadatas)
@@ -52,6 +55,10 @@ namespace Hx.ArchiveFlow.Application
                     input.Status,
                     input.BusinessKey,
                     input.Remarks,
+                    input.ContentType,
+                    input.MediaType,
+                    input.SecretLevel,
+                    input.RetentionPeriod,
                     metadatas);
 
                 return ObjectMapper.Map<Archive, ArchiveDto>(archive);
@@ -65,7 +72,10 @@ namespace Hx.ArchiveFlow.Application
                         m.Value,
                         m.DataType,
                         archiveId,
-                        m.NavigationProperty))
+                        m.NavigationProperty,
+                        m.Order,
+                        m.Title,
+                        m.IsStatic))
                     .ToList() ?? [];
 
                 foreach (var metadata in metadatas)
@@ -82,6 +92,10 @@ namespace Hx.ArchiveFlow.Application
                     input.Status,
                     input.BusinessKey,
                     input.Remarks,
+                    input.ContentType,
+                    input.MediaType,
+                    input.SecretLevel,
+                    input.RetentionPeriod,
                     metadatas);
 
                 return ObjectMapper.Map<Archive, ArchiveDto>(archive);
@@ -108,6 +122,19 @@ namespace Hx.ArchiveFlow.Application
         {
             var archive = await _archiveRepository.FindAsync(id);
             return ObjectMapper.Map<Archive?, ArchiveDto?>(archive);
+        }
+
+        /// <summary>
+        /// 更新元数据值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="archiveId"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<MetadataDto> UpdateByKeysAsync(string key, Guid archiveId, string value)
+        {
+            var entity = await _archiveDomainService.UpdateByKeysAsync(key, archiveId, value);
+            return ObjectMapper.Map<Metadata, MetadataDto>(entity);
         }
 
         /// <summary>

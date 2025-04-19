@@ -26,6 +26,14 @@ namespace Hx.ArchivaFlow.Application.Contracts
         /// <returns></returns>
         Task<ArchiveDto?> GetArchiveAsync(Guid id);
         /// <summary>
+        /// 更新元数据值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="archiveId"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<MetadataDto> UpdateByKeysAsync(string key, Guid archiveId, string value);
+        /// <summary>
         /// 分页查询档案
         /// </summary>
         /// <param name="input"></param>

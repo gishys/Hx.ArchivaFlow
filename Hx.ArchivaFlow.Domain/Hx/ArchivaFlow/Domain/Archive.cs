@@ -39,6 +39,27 @@ namespace Hx.ArchivaFlow.Domain
         public string BusinessKey { get; private set; }
 
         /// <summary>
+        /// 内容分类
+        /// </summary>
+        public string ContentType { get; private set; }
+
+        /// <summary>
+        /// 载体形式
+        /// </summary>
+        public MediaCatagory MediaType { get; private set; }
+
+        /// <summary>
+        /// 保密等级
+        /// </summary>
+
+        public SecretLevelCategory SecretLevel { get; private set; }
+
+        /// <summary>
+        /// 保管期限
+        /// </summary>
+        public RetensionPeriodCategory RetentionPeriod { get; private set; }
+
+        /// <summary>
         /// 备注信息
         /// </summary>
         public string? Remarks { get; private set; }
@@ -49,7 +70,19 @@ namespace Hx.ArchivaFlow.Domain
         public virtual ICollection<Metadata> Metadatas { get; private set; } = new HashSet<Metadata>();
 
         // 赋值构造函数
-        public Archive(Guid id, string archiveNo, string title, int year, DateTime? filingDate, ArchiveStatus status, string businessKey, string? remarks)
+        public Archive(
+            Guid id,
+            string archiveNo,
+            string title,
+            int year,
+            DateTime? filingDate,
+            ArchiveStatus status,
+            string businessKey,
+            string? remarks,
+            string contentType,
+            MediaCatagory mediaType,
+            SecretLevelCategory secretLevel,
+            RetensionPeriodCategory retentionPeriod)
         {
             Id = id;
             ArchiveNo = archiveNo;
@@ -59,6 +92,10 @@ namespace Hx.ArchivaFlow.Domain
             Status = status;
             BusinessKey = businessKey;
             Remarks = remarks;
+            ContentType = contentType;
+            MediaType = mediaType;
+            SecretLevel = secretLevel;
+            RetentionPeriod = retentionPeriod;
         }
         public void SetArchiveNo(string archiveNo)
         {
@@ -95,6 +132,26 @@ namespace Hx.ArchivaFlow.Domain
             Remarks = remarks;
         }
 
+        public void SetContentType(string contentType)
+        {
+            ContentType = contentType;
+        }
+
+        public void SetMediaType(MediaCatagory mediaType)
+        {
+            MediaType = mediaType;
+        }
+
+        public void SetSecretLevel(SecretLevelCategory secretLevel)
+        {
+            SecretLevel = secretLevel;
+        }
+
+        public void SetRetentionPeriod(RetensionPeriodCategory retentionPeriod)
+        {
+            RetentionPeriod = retentionPeriod;
+        }
+
         public void UpdateMetadata(List<Metadata> metadatas)
         {
             foreach (var metadata in metadatas)
@@ -109,7 +166,9 @@ namespace Hx.ArchivaFlow.Domain
                     existing.Update(
                         metadata.Value,
                         metadata.DataType,
-                        metadata.NavigationProperty
+                        metadata.NavigationProperty,
+                        metadata.Order,
+                        metadata.Title
                     );
                     existingMetadatas.Remove(metadata.Key);
                 }

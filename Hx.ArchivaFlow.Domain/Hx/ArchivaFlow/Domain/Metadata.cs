@@ -35,13 +35,36 @@ namespace Hx.ArchivaFlow.Domain
         public virtual Archive Archive { get; private set; }
 
         /// <summary>
+        /// 顺序
+        /// </summary>
+        public double Order { get; private set; }
+
+        /// <summary>
+        /// 元数据标题
+        /// </summary>
+        public string Title { get; private set; }
+
+        /// <summary>
+        /// 是否静态
+        /// </summary>
+        public bool IsStatic { get; private set; }
+
+        /// <summary>
         /// 元数据导航属性（扩展预留）
         /// </summary>
         public string? NavigationProperty { get; private set; }
 
         // 赋值构造函数
 #pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
-        public Metadata(string key, string value, MetadataDataType dataType, Guid archiveId, string? navigationProperty)
+        public Metadata(
+            string key,
+            string value,
+            MetadataDataType dataType,
+            Guid archiveId,
+            string? navigationProperty,
+            double order,
+            string title,
+            bool isStatic)
 #pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
         {
             Key = key;
@@ -49,6 +72,9 @@ namespace Hx.ArchivaFlow.Domain
             DataType = dataType;
             ArchiveId = archiveId;
             NavigationProperty = navigationProperty;
+            Order = order;
+            Title = title;
+            IsStatic = isStatic;
         }
         public void SetKey(string key)
         {
@@ -75,7 +101,22 @@ namespace Hx.ArchivaFlow.Domain
             NavigationProperty = navigationProperty;
         }
 
-        public void Update(string value, MetadataDataType dataType, string? navigationProperty)
+        public void SetOder(double oder)
+        {
+            Order = oder;
+        }
+
+        public void SetTitle(string title)
+        {
+            Title = title;
+        }
+
+        public void SetIsStatic(bool isStatic)
+        {
+            IsStatic = isStatic;
+        }
+
+        public void Update(string value, MetadataDataType dataType, string? navigationProperty, double order, string title)
         {
             if (!string.Equals(Value, value))
             {
@@ -88,6 +129,14 @@ namespace Hx.ArchivaFlow.Domain
             if (!string.Equals(NavigationProperty, navigationProperty))
             {
                 NavigationProperty = navigationProperty;
+            }
+            if (Order != order)
+            {
+                Order = order;
+            }
+            if (!string.Equals(Title, title))
+            {
+                Title = title;
             }
         }
 
