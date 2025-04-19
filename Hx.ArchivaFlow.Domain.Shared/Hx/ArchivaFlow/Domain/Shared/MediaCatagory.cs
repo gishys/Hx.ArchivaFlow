@@ -11,14 +11,14 @@ namespace Hx.ArchivaFlow.Domain.Shared
         /// <summary>
         /// 纸质
         /// </summary>
-        Paper = 1,
+        Paper = 0,
         /// <summary>
         /// 电子
         /// </summary>
-        Electronic = 2,
+        Electronic = 1,
         /// <summary>
         /// 物理
         /// </summary>
-        Physical = 3
+        Physical = 2
     }
 }
