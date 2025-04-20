@@ -27,11 +27,33 @@ namespace Hx.ArchivaFlow.Domain
             MediaCatagory mediaType,
             SecretLevelCategory secretLevel,
             RetensionPeriodCategory retensionPeriod,
+            string fundsCode,
+            string? custodianUnit,
+            string? storageLocation,
+            string? archivalCode,
+            string? archivalCategory,
             List<Metadata> metadatas)
         {
             await ValidateArchiveNoUniquenessAsync(archiveNo);
             await ValidateArchiveBusinessKeyUniquenessAsync(businessKey);
-            var archive = new Archive(id, archiveNo, title, year, filingDate, status, businessKey, remarks, contentType, mediaType, secretLevel, retensionPeriod);
+            var archive = new Archive(
+                id,
+                archiveNo,
+                title,
+                year,
+                filingDate,
+                status,
+                businessKey,
+                remarks,
+                contentType,
+                mediaType,
+                secretLevel,
+                retensionPeriod,
+                fundsCode,
+                custodianUnit,
+                storageLocation,
+                archivalCode,
+                archivalCategory);
             foreach (var metadata in metadatas)
             {
                 await _metadataRepository.InsertAsync(metadata);
@@ -54,6 +76,11 @@ namespace Hx.ArchivaFlow.Domain
             MediaCatagory mediaType,
             SecretLevelCategory secretLevel,
             RetensionPeriodCategory retensionPeriod,
+            string fundsCode,
+            string? custodianUnit,
+            string? storageLocation,
+            string? archivalCode,
+            string? archivalCategory,
             List<Metadata> metadatas)
         {
             if (!string.Equals(archiveToUpdate.Title, newTitle))
@@ -96,6 +123,26 @@ namespace Hx.ArchivaFlow.Domain
             if (archiveToUpdate.RetentionPeriod != retensionPeriod)
             {
                 archiveToUpdate.SetRetentionPeriod(retensionPeriod);
+            }
+            if (archiveToUpdate.FundsCode != fundsCode)
+            {
+                archiveToUpdate.SetFundsCode(fundsCode);
+            }
+            if (archiveToUpdate.CustodianUnit != custodianUnit)
+            {
+                archiveToUpdate.SetCustodianUnit(custodianUnit);
+            }
+            if (archiveToUpdate.StorageLocation != storageLocation)
+            {
+                archiveToUpdate.SetStorageLocation(storageLocation);
+            }
+            if (archiveToUpdate.ArchivalCode != archivalCode)
+            {
+                archiveToUpdate.SetArchivalCode(archivalCode);
+            }
+            if (archiveToUpdate.ArchivalCategory != archivalCategory)
+            {
+                archiveToUpdate.SetArchivalCategory(archivalCategory);
             }
 
             archiveToUpdate.UpdateMetadata(metadatas);

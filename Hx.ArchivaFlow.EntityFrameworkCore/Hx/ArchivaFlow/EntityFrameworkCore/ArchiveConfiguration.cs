@@ -66,6 +66,27 @@ namespace Hx.ArchivaFlow.EntityFrameworkCore
                    .IsRequired()
                    .HasColumnName("BUSINESS_KEY");
 
+            builder.Property(a => a.FundsCode)
+                .HasMaxLength(ArchivaFlowConsts.FundsCodeMaxLength)
+                .IsRequired()
+                .HasColumnName("FUNDS_CODE");
+
+            builder.Property(a => a.CustodianUnit)
+                .HasMaxLength(ArchivaFlowConsts.CustodianUnitMaxLength)
+                .HasColumnName("CUSTODIAN_UNIT");
+
+            builder.Property(a => a.StorageLocation)
+                .HasMaxLength(ArchivaFlowConsts.StorageLocationMaxLength)
+                .HasColumnName("STORAGE_LOCATION");
+
+            builder.Property(a => a.ArchivalCode)
+                .HasMaxLength(ArchivaFlowConsts.ArchivalCodeMaxLength)
+                .HasColumnName("ARCHIVAL_CODE");
+
+            builder.Property(a => a.ArchivalCategory)
+                .HasMaxLength(ArchivaFlowConsts.ArchivalCategoryMaxLength)
+                .HasColumnName("ARCHIVAL_CATEGORY");
+
             builder.Property(a => a.Remarks)
                    .HasMaxLength(ArchivaFlowConsts.RemarksMaxLength)
                    .HasColumnName("REMARKS");

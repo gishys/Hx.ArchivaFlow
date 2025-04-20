@@ -60,6 +60,31 @@ namespace Hx.ArchivaFlow.Domain
         public RetensionPeriodCategory RetentionPeriod { get; private set; }
 
         /// <summary>
+        /// 全宗号
+        /// </summary>
+        public string FundsCode { get; private set; }
+
+        /// <summary>
+        /// 保管单位
+        /// </summary>
+        public string? CustodianUnit { get; private set; }
+
+        /// <summary>
+        /// 存放位置
+        /// </summary>
+        public string? StorageLocation { get; private set; }
+
+        /// <summary>
+        /// 档案馆代号
+        /// </summary>
+        public string? ArchivalCode { get; private set; }
+
+        /// <summary>
+        /// 档案门类代码
+        /// </summary>
+        public string? ArchivalCategory { get; private set; }
+
+        /// <summary>
         /// 备注信息
         /// </summary>
         public string? Remarks { get; private set; }
@@ -82,7 +107,12 @@ namespace Hx.ArchivaFlow.Domain
             string contentType,
             MediaCatagory mediaType,
             SecretLevelCategory secretLevel,
-            RetensionPeriodCategory retentionPeriod)
+            RetensionPeriodCategory retentionPeriod,
+            string fundsCode,
+            string? custodianUnit,
+            string? storageLocation,
+            string? archivalCode = null,
+            string? archivalCategory = null)
         {
             Id = id;
             ArchiveNo = archiveNo;
@@ -96,6 +126,11 @@ namespace Hx.ArchivaFlow.Domain
             MediaType = mediaType;
             SecretLevel = secretLevel;
             RetentionPeriod = retentionPeriod;
+            FundsCode = fundsCode;
+            CustodianUnit = custodianUnit;
+            StorageLocation = storageLocation;
+            ArchivalCode = archivalCode;
+            ArchivalCategory = archivalCategory;
         }
         public void SetArchiveNo(string archiveNo)
         {
@@ -150,6 +185,31 @@ namespace Hx.ArchivaFlow.Domain
         public void SetRetentionPeriod(RetensionPeriodCategory retentionPeriod)
         {
             RetentionPeriod = retentionPeriod;
+        }
+
+        public void SetFundsCode(string fundsCode)
+        {
+            FundsCode = fundsCode;
+        }
+
+        public void SetCustodianUnit(string? custodianUnit)
+        {
+            CustodianUnit = custodianUnit;
+        }
+
+        public void SetStorageLocation(string? storageLocation)
+        {
+            StorageLocation = storageLocation;
+        }
+
+        public void SetArchivalCode(string? archivalCode)
+        {
+            ArchivalCode = archivalCode;
+        }
+
+        public void SetArchivalCategory(string? archivalCategory)
+        {
+            ArchivalCategory = archivalCategory;
         }
 
         public void UpdateMetadata(List<Metadata> metadatas)

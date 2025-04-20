@@ -38,5 +38,30 @@ namespace Hx.ArchivaFlow.Application.Contracts
         /// 保管期限
         /// </summary>
         public RetensionPeriodCategory RetentionPeriod { get; set; }
+
+        /// <summary>
+        /// 全宗号
+        /// </summary>
+        public required string FundsCode { get; set; }
+
+        /// <summary>
+        /// 保管单位
+        /// </summary>
+        public string? CustodianUnit { get; set; }
+
+        /// <summary>
+        /// 存放位置
+        /// </summary>
+        public string? StorageLocation { get; set; }
+
+        /// <summary>
+        /// 档案馆代号
+        /// </summary>
+        public string? ArchivalCode { get; set; }
+
+        /// <summary>
+        /// 档案门类代码
+        /// </summary>
+        public string? ArchivalCategory { get; set; }
     }
 }

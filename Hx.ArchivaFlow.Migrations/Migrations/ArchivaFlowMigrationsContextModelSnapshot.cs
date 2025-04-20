@@ -31,6 +31,16 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("ID");
 
+                    b.Property<string>("ArchivalCategory")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("ARCHIVAL_CATEGORY");
+
+                    b.Property<string>("ArchivalCode")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("ARCHIVAL_CODE");
+
                     b.Property<string>("ArchiveNo")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -64,6 +74,11 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("CREATORID");
 
+                    b.Property<string>("CustodianUnit")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("CUSTODIAN_UNIT");
+
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uuid")
                         .HasColumnName("DELETERID");
@@ -80,6 +95,12 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                     b.Property<DateTime?>("FilingDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("FILING_DATE");
+
+                    b.Property<string>("FundsCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("FUNDS_CODE");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -115,6 +136,11 @@ namespace Hx.ArchivaFlow.Migrations.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("smallint")
                         .HasColumnName("STATUS");
+
+                    b.Property<string>("StorageLocation")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("STORAGE_LOCATION");
 
                     b.Property<string>("Title")
                         .IsRequired()

@@ -59,6 +59,11 @@ namespace Hx.ArchiveFlow.Application
                     input.MediaType,
                     input.SecretLevel,
                     input.RetentionPeriod,
+                    input.FundsCode,
+                    input.CustodianUnit,
+                    input.StorageLocation,
+                    input.ArchivalCode,
+                    input.ArchivalCategory,
                     metadatas);
 
                 return ObjectMapper.Map<Archive, ArchiveDto>(archive);
@@ -96,6 +101,11 @@ namespace Hx.ArchiveFlow.Application
                     input.MediaType,
                     input.SecretLevel,
                     input.RetentionPeriod,
+                    input.FundsCode,
+                    input.CustodianUnit,
+                    input.StorageLocation,
+                    input.ArchivalCode,
+                    input.ArchivalCategory,
                     metadatas);
 
                 return ObjectMapper.Map<Archive, ArchiveDto>(archive);
