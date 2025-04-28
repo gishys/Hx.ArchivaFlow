@@ -1,4 +1,4 @@
-﻿namespace Hx.Localization
+﻿namespace Localization
 {
     public class ArchivaFlowResource
     {

@@ -1,4 +1,4 @@
-﻿using Hx.Localization;
+﻿using Localization;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
@@ -20,7 +20,7 @@ namespace Hx.ArchivaFlow.Domain.Shared
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<ArchivaFlowResource>("en")
+                    .Add<ArchivaFlowResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/ArchivaFlow");
             });

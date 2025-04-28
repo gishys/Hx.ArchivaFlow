@@ -146,15 +146,15 @@ namespace Hx.ArchivaFlow.Domain
             {
                 case MetadataDataType.Number:
                     if (!double.TryParse(Value, out _))
-                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
+                        throw new UserFriendlyException(message: $"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
                     break;
                 case MetadataDataType.Date:
                     if (!DateTime.TryParse(Value, out _))
-                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
+                        throw new UserFriendlyException(message: $"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
                     break;
                 case MetadataDataType.Boolean:
                     if (!bool.TryParse(Value, out _))
-                        throw new UserFriendlyException($"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
+                        throw new UserFriendlyException(message: $"[{Key}]字段类型{DataType}与字段值{Value}不匹配！");
                     break;
             }
         }

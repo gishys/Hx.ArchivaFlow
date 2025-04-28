@@ -1,4 +1,4 @@
-﻿using Hx.Localization;
+﻿using Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 

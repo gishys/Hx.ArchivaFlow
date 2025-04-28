@@ -35,7 +35,7 @@ namespace Hx.ArchivaFlow.HttpApi
                 }
                 await _archiveAppService.CreateFilesAsync(catalogueId, inputs, mode);
             }
-            throw new UserFriendlyException("上传文件为空！");
+            throw new UserFriendlyException(message: "上传文件为空！");
         }
         [HttpPost]
         [Route("paged")]

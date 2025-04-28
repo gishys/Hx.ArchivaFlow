@@ -74,7 +74,7 @@ namespace Hx.ArchivaFlow.Attachment.Application
                         }
                         catch (HttpRequestException ex)
                         {
-                            throw new UserFriendlyException(ex.StackTrace ?? ex.Message);
+                            throw new UserFriendlyException(message: ex.StackTrace ?? ex.Message);
                         }
                     }
                     var result = await _catalogueAppService.CreateFilesAsync(catalogueId, list);

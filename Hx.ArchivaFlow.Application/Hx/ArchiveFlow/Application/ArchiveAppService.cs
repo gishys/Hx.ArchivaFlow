@@ -198,7 +198,7 @@ namespace Hx.ArchiveFlow.Application
         public async Task CreateFilesAsync(Guid catalogueId, List<ArchiveFileCreateDto> input, ArchiveFileCreateMode mode)
         {
             var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
-                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+                ?? throw new UserFriendlyException(message: "[IArchiveFileAppService]未注册服务！");
             await archiveFile.CreateFilesAsync(catalogueId, input, mode);
         }
         /// <summary>
@@ -211,7 +211,7 @@ namespace Hx.ArchiveFlow.Application
         public async Task CreateCatalogueAsync(List<ArchiveCatalogueCreateDto> input, ArchiveCatalogueCreateMode mode)
         {
             var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
-                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+                ?? throw new UserFriendlyException(message: "[IArchiveFileAppService]未注册服务！");
             await archiveFile.CreateCatalogueAsync(input, mode);
         }
         /// <summary>
@@ -223,7 +223,7 @@ namespace Hx.ArchiveFlow.Application
         public async Task DeleteFileAsync(Guid id)
         {
             var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
-                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+                ?? throw new UserFriendlyException(message: "[IArchiveFileAppService]未注册服务！");
             await archiveFile.DeleteFileAsync(id);
         }
         /// <summary>
@@ -235,7 +235,7 @@ namespace Hx.ArchiveFlow.Application
         public async Task DeleteCatalogueAsync(Guid id)
         {
             var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
-                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+                ?? throw new UserFriendlyException(message: "[IArchiveFileAppService]未注册服务！");
             await archiveFile.DeleteCatalogueAsync(id);
         }
         /// <summary>
@@ -248,7 +248,7 @@ namespace Hx.ArchiveFlow.Application
         public async Task<List<ArchiveCatalogueDto>> GetListByReferenceAsync(List<GetArchiveCatalogueListInput> input)
         {
             var archiveFile = _serviceProvider.GetService<IArchiveFileAppService>()
-                ?? throw new UserFriendlyException("[IArchiveFileAppService]未注册服务！");
+                ?? throw new UserFriendlyException(message: "[IArchiveFileAppService]未注册服务！");
             return await archiveFile.GetListByReferenceAsync(input);
         }
     }

@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Hx\Localization\ArchivaFlow\zh-Hans.json" />
+    <None Remove="Localization\ArchivaFlow\zh-Hans.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Hx\Localization\ArchivaFlow\zh-Hans.json" />
+    <EmbeddedResource Include="Localization\ArchivaFlow\zh-Hans.json" />
   </ItemGroup>
 
   <ItemGroup>
