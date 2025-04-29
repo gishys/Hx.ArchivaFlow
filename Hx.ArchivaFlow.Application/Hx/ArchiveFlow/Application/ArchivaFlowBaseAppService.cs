@@ -3,9 +3,9 @@ using Volo.Abp.Application.Services;
 
 namespace Hx.ArchiveFlow.Application
 {
-    public class BaseAppService : ApplicationService
+    public class ArchivaFlowBaseAppService : ApplicationService
     {
-        protected BaseAppService()
+        protected ArchivaFlowBaseAppService()
         {
             LocalizationResource = typeof(ArchivaFlowResource);
         }
